@@ -1,7 +1,4 @@
-function [ Orientation_Long , Position_Long , Velocity_Long ] =  TrajectoryPlanFn()
-
-%physical vars
-t_step = 0.5; %keep it so you'll get integers from your time. this could be a failure mode :s
+function [ Orientation_Long , Position_Long , Velocity_Long ] =  TrajectoryPlanFn(t_step)
 
 %% block planning
 

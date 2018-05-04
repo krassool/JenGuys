@@ -27,20 +27,16 @@ servoObj = ServoSetup(MotorStruct,ardUno);
 [ Orientation , Position , Velocity ] = TrajectoryPlanFn(t_step); % plan trajectory
 
 %% Loop
-num_traj=length(Position);
-
-% OUTPUTmat=zeros(num_traj,5);
-for kk=1:num_traj;
+for kk=1:100
+    
     [Qmat] = InvKinLean( Position(kk,1) , Position(kk,2) , Position(kk,3) ,R_Params );
-    %     OUTPUTmat(kk,:)=Qmat;
-    
     TurnServos(Qmat,ardUno,servoObj);
-    %     pause(t_step)
-    
+    pause(t_step)
+
 end
 
 
-Pot2q(ardUno); %NEEDS CALIBRATION, takes your analog reads and outputs q
+% Pot2q(ardUno); %NEEDS CALIBRATION, takes your analog reads and outputs q
 % end
 
 

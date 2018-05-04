@@ -12,7 +12,7 @@ PotMax      = [ 2.5 , 2.5 , 2.5 , 2.5 , 2.5 ];
 PotMin      = [ 0.5 , 0.5 , 0.5 , 0.5 , 0.5 ];
 PotRange    = PotMax - PotMin; 
 
-Qread = 180 * (PotRead - PotMin) / PotMin;  
+Qread = 180 * (PotRead - PotMin) / PotRange;  
 
 end
 

@@ -1,9 +1,7 @@
 
 
-clear
-close all
 %create connection to ardunio
-a = arduino('/dev/tty.usbmodem1411','uno', 'Libraries', 'Servo');
+% a = arduino('/dev/tty.usbmodem1411','uno', 'Libraries', 'Servo');
 
 
 min_pulse=    800;      %%in micro seconds. Normal min ~= 1000 us.

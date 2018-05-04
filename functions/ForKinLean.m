@@ -8,10 +8,12 @@ L2  =   R_Params(3);
 L3  =   R_Params(4);
 
 %DH Table
- alph=[0 -90 0 0 -90];
- a=[0 0 L1 L2 0];
- d=[b 0 0 0 L3];
- theta=[q1 q2-90 q3+90 q4 q5];
+alph    =    [0   -90    0     0     -90 ];
+a       =    [0    0     L1    L2    0   ];
+d       =    [b    0     0     0     L3  ];
+theta   =    [q1 q2-90 q3+90   q4    q5  ];
+% combined
+DH      =    [alpha' , a' , d' , theta'];
  
  %Transformation matrices
    for i=1:5
