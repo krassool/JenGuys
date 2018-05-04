@@ -1,13 +1,6 @@
 %% Main JenGuys Robot
 addpath('functions') %folder functions should be in the path
 
-%% Arduino set up
-
-ardUno = arduino('/dev/tty.usbmodem1411','uno', 'Libraries', 'Servo');
-MotorStruct = MotorParams();
-ServoSetup(MotorStruct,ardUno);
-
-return
 
 %% Robot Params
 %Robot paramters in mm
@@ -24,6 +17,16 @@ d       =    [b    0     0     0     L3  ];
 theta   =    [q1 q2-90 q3+90   q4    q5  ];
 % combined
 DH      =    [alpha' , a' , d' , theta'];
+
+%% Arduino set up
+
+ardUno = arduino('/dev/tty.usbmodem1411','uno', 'Libraries', 'Servo');
+MotorStruct = MotorParams();
+ServoSetup(MotorStruct,ardUno);
+
+return
+
+
 
 %% Set up
 [ Orientation , Position , Velocity ] = TrajectoryPlanFn(); % plan trajectory
