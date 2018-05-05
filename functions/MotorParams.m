@@ -18,8 +18,8 @@ s2.maxp = 2400*10^-6;
 %Servo 3, Q3 (Elbow)
 s3.name = 's3'      ;
 s3.pin  = 'D8'      ;
-s3.minp = 544*10^-6 ;
-s3.maxp = 2400*10^-6;
+s3.minp = 600*10^-6 ;
+s3.maxp = 2500*10^-6;
 
 %Servo 4, Q4 (Wrist)
 s4.name = 's4'      ;
