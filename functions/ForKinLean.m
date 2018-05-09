@@ -1,4 +1,4 @@
-function [T LPVO] = For_Kin3D(q1,q2,q3,q4,q5,R_Params)
+function [T LPVO] = ForKinLean(q1,q2,q3,q4,q5,R_Params)
 %UNTITLED5 Summary of this function goes here
 %   Detailed explanation goes here
 % params
@@ -13,7 +13,7 @@ a       =    [0    0     L1    L2    0   ];
 d       =    [b    0     0     0     L3  ];
 theta   =    [q1 q2-90 q3+90   q4    q5  ];
 % combined
-DH      =    [alpha' , a' , d' , theta'];
+% DH      =    [alpha' , a' , d' , theta'];
  
  %Transformation matrices
    for i=1:5

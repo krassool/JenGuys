@@ -1,10 +1,8 @@
 %% Main JenGuys Robot
 
-
 addpath('functions') %folder functions should be in the path
 
-%% Options
-PLOT=1;
+
 
 
 %% Robot Params
@@ -80,15 +78,17 @@ close all
 
 %Choose if to plot or not.
 if PLOT==1;
+    
     %generate plot points
-    LPVO=zeros(3,6,length(Position));
-    for g=1:length(Position)
-        [T LPVO(:,:,g)] = ForKinLean(OUTPUTmat(g,1),OUTPUTmat(g,2),...
-            OUTPUTmat(g,3),OUTPUTmat(g,4),OUTPUTmat(g,5),R_Params);
+    LPVO=zeros(3,6,length(Position_Long));
+    for g=1:length(Position_Long)
+        [T LPVO(:,:,g)] = For_Kin3D(Q1(g),Q2(g),Q3(g),Q4(g),Q5(g),R_Params);
     end
     
     %plot in 3d
     Plot3dJenga(LPVO,Position)
+    
+    
 end
 
 % Pot2q(ardUno); %NEEDS CALIBRATION, takes your analog reads and outputs q
