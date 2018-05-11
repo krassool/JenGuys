@@ -1,4 +1,4 @@
-function TurnServos(Qmatrix,a,servoObj)
+function TurnServos(Qmatrix,servoObj)
 
 % PotRead = zeros(1,5); %initialise
 

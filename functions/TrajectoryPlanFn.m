@@ -3,22 +3,22 @@ function [ Orientation_Long , Position_Long , Velocity_Long ] =  TrajectoryPlanF
 %% block planning
 
 num_blocks=54;
-tower_y=-37.5;
-tower_x= 180 ;
+tower_y= 0;
+tower_x=  230.50 ;
 [ BlMat ] = block_planning(tower_y, tower_x); %returns a matrix with 54x3 elements. 54 blocks with there respective x y and z positions
 
 %% Trajectory Planning %%%%%%%%%%%%%%%
 
 % Fixed parameters
-Via1xy=[ 150, 150 ]; %x,y position of first via point
-suction_pause = 1; %in seconds
+Via1xy=[ 217.5, 67.5 ]; %x,y position of first via point
+suction_pause = 3; %in seconds
 
 %fixed vectors
-PL     = [80,170,15]  ; %loading bay position
+PL     =[217.5,67.5,15]  ; %loading bay position
 vels_x =[0, 50, 0, 0] ; %velocoity at (PL, P1, P2, Pf) in mm/s
 vels_y =[0, 50, 0, 0] ; %velocoity at (PL, P1, P2, Pf) in mm/s
 vels_z =[0, 50, 10, 0]; %velocoity at (PL, P1, P2, Pf) in mm/s
-times  =[ 4, 2, 2 ]   ; %time for each arc (PL -> P1, then P1 -> P2, then P2 -> Pf
+times  =[ 2, 4, 2 ]   ; %time for each arc (PL -> P1, then P1 -> P2, then P2 -> Pf
 via_clear=75;
 deg_0=0;
 deg_f=90;

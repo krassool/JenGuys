@@ -20,6 +20,7 @@ xmin= -sqr_mag ; xmax = sqr_mag; ymin = -sqr_mag; ymax = sqr_mag; zmin = -sqr_ma
 axis([xmin xmax ymin ymax zmin zmax]);
 xlabel('X');    ylabel('Y');    zlabel('Z') %set the axis labels
 grid on
+view(90,90)
 hold on
 
 %draw the floor
