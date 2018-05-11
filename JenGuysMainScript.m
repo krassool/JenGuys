@@ -30,6 +30,8 @@ if exist('ardUno')==0;
     end
 end
 
+return
+
 MotorStruct = MotorParams();
 
 if (exist('servoObj')==0) && arduino_connect
@@ -50,12 +52,12 @@ num_traj=length(Position); %number of trajectory points in total
 QmatStore       =   zeros(num_traj,5)   ;
 QmatAdjStore    =   QmatStore           ;
 
-% num_traj=1;
+num_traj=1;
 
 
 for kk=1:num_traj;
     [Qmat] = InvKinLean( Position(kk,1) , Position(kk,2) , Position(kk,3) ,R_Params );
-%     QmatMat=[ 0, 34.0688 , -8.3879 , 42 , 0 ];
+    Qmat=[ 0, 0 , 0 , 0 , 0 ];
 %     QmatMat=[ 0, 34.0688 , 34.0688 , 0 , 0 ];
 %     QmatMat=[ 0, 41.8314, 9.4078 , -51.2392 , 0 ];
     
@@ -67,9 +69,9 @@ for kk=1:num_traj;
     
     if arduino_connect
         TurnServos(QmatAdj,servoObj);
-        Qdecimal = (QmatAdj+90)/180; %this is becuse the input angles have the range -90 to +90
-        QmatAdj;
-        Qmat;
+        Qdecimal = (QmatAdj+90)/180 %this is becuse the input angles have the range -90 to +90
+        QmatAdj
+        Qmat
         if kk>1;
 %             turn_stepper(QmatAdjStore(kk,1) , QmatAdjStore(kk-1,1) , ardUno )
         else

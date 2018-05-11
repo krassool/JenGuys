@@ -1,5 +1,3 @@
-function turn_stepper(nxt_q,prev_q,ardUno)
-% Turn Stepper
 
 a = ardUno;
 
@@ -35,7 +33,7 @@ writeDigitalPin(a,EN,0)
 
 %step size
 writeDigitalPin(a,MS1,0)
-writeDigitalPin(a,MS2,1)
+writeDigitalPin(a,MS2,0)
 
 %fix negative direction logic
 switch prev_q
@@ -51,16 +49,13 @@ switch prev_q
             writeDigitalPin(a,dir,1)
             q_moves = nxt_q-prev_q;
         end
-        num_moves = q_moves/1.675;
+        num_moves = round(q_moves/1.675);
 end
 ang_rng = linspace(prev_q,nxt_q,num_moves);
-for i = length(ang_rng)
+for i = 1:length(ang_rng)*50
     writeDigitalPin(a,stp,1)
+    %pause(.0021)
     writeDigitalPin(a,stp,0)
-    pause(.0021)
 end
 
-
-
-
-end
+writeDigitalPin(a,EN,1)
