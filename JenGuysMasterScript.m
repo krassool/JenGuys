@@ -1,8 +1,8 @@
-%% Main JenGuys Robot
-addpath('functions') %folder functions should be in the path
+function [] = JenGuysQFunc(LoadingX,LoadingY,TowerX,TowerY)
+
 
 %% Options
-PLOT=1;
+PLOT=0;
 
 %% Robot Params
 %Robot paramters in mm
@@ -23,7 +23,7 @@ t_step_loop = 0.0; %keep it so you'll get integers from your time. this could be
 MotorStruct = MotorParams();
 
 %% Set up
-[ Orientation , Position , Velocity ] = TrajectoryPlanFn(t_step); % plan trajectory
+[ Orientation , Position , Velocity ] = TrajectoryPlanFn(t_step,LoadingX,LoadingY,TowerX,TowerY); % plan trajectory
 
 %% Temporary cut position vector
 Position=Position(1:50,:);
@@ -60,23 +60,15 @@ if PLOT==1;
     Plot3dJenga(LPVO,Position)
 end
 
-% Pot2q(ardUno); %NEEDS CALIBRATION, takes your analog reads and outputs q
-% end
-
-
-% LPVO=zeros(3,6,length(Position_Long));
-% for g=1:length(Position_Long)
-%     [T LPVO(:,:,g)] = ForKinLean(Q1(g),Q2(g),Q3(g),Q4(g),Q5(g),R_Params);
-% end
-export =1;
-
+export =0;
 %Export
 if export==1;
     
     %%HACKY TEMP FIX
     QmatAdjStore(:,2)=-QmatAdjStore(:,2);
+    
     ExpMatrix = [ QmatAdjStore ];
-    output_filename=strcat('exportqs','.csv')
+    output_filename=strcat('exportqs','.csv');
     dlmwrite(output_filename,ExpMatrix','precision','%.1f')
 end
 

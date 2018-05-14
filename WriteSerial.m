@@ -9,11 +9,11 @@ if ~isempty(instrfind)
      delete(instrfindall);
 end
 
-s = serial('COM6','BaudRate',115200);
+s = serial('/dev/tty.usbmodem1411','BaudRate',115200);
 fopen(s);
 readData = fscanf(s);
 
-for j=1:length(QmatAdjStore)
+for j=1:2%length(QmatAdjStore)
     current_qs=strcat('t',num2str(QmatAdjStore(j,1)),'x','t',num2str(QmatAdjStore(j,2)),'x','t',num2str(QmatAdjStore(j,3)),'x','t',num2str(QmatAdjStore(j,4)),'x','t',num2str(QmatAdjStore(j,5)),'x');
     fwrite(s,current_qs);
     for i=1:5

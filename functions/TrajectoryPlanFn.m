@@ -1,20 +1,21 @@
-function [ Orientation_Long , Position_Long , Velocity_Long ] =  TrajectoryPlanFn(t_step)
+function [ Orientation_Long , Position_Long , Velocity_Long ] =  TrajectoryPlanFn(t_step,LoadingX,LoadingY,TowerX,TowerY)
 
 %% block planning
 
 num_blocks=54;
-tower_y= 0;
-tower_x=  230.50 ;
+tower_y= TowerX;
+tower_x=  TowerY ;
 [ BlMat ] = block_planning(tower_y, tower_x); %returns a matrix with 54x3 elements. 54 blocks with there respective x y and z positions
 
 %% Trajectory Planning %%%%%%%%%%%%%%%
 
 % Fixed parameters
-Via1xy=[ 217.5, 67.5 ]; %x,y position of first via point
 suction_pause = 3; %in seconds
 
 %fixed vectors
-PL     =[217.5,67.5,15]  ; %loading bay position
+PL     =[ LoadingX, LoadingY,15]  ; %loading bay position
+Via1xy =[ LoadingX, LoadingY ]; %x,y position of first via point
+
 vels_x =[0, 50, 0, 0] ; %velocoity at (PL, P1, P2, Pf) in mm/s
 vels_y =[0, 50, 0, 0] ; %velocoity at (PL, P1, P2, Pf) in mm/s
 vels_z =[0, 50, 10, 0]; %velocoity at (PL, P1, P2, Pf) in mm/s
