@@ -28,8 +28,8 @@ QmatStore       =   zeros(num_traj,5)   ;
 QmatAdjStore    =   QmatStore           ;
 
 for kk=1:num_traj;
-    [Qmat] = InvKinLean( Position(kk,1) , Position(kk,2) , Position(kk,3) ,R_Params );
-    QmatAdj = AdjustAngles( Qmat , MotorStruct );
+    [Qmat]              =   InvKinLean( Position(kk,1) , Position(kk,2) , Position(kk,3) ,R_Params );
+    QmatAdj             =   AdjustAngles( Qmat , MotorStruct );
     QmatStore(kk,:)     =   Qmat    ;
     QmatAdjStore(kk,:)  =   QmatAdj ;
 end
