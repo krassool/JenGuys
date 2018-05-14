@@ -1,6 +1,8 @@
 function turn_stepper(nxt_q,prev_q,ardUno)
 % Turn Stepper
 
+
+
 a = ardUno;
 
 %Steps 6.7

@@ -2,42 +2,31 @@
 addpath('functions') %folder functions should be in the path
 
 %% Options
-PLOT=0;
+PLOT=1;
 
 %% Robot Params
 %Robot paramters in mm
-b   = 92;
-L1  = 1;
-L2  = 240;
-L3  = 50;
+b   = 125; %plus half the box
+L1  = 180;
+L2  = 172;
+L3  = 110;
 R_Params = [b, L1, L2, L3];
 
 %DH table defined within ForKinLean function
 
 %physical vars
-t_step = 0.5; %keep it so you'll get integers from your time. this could be a failure mode :s
-t_step_loop = .02; %keep it so you'll get integers from your time. this could be a failure mode :s
+t_step = .2; %keep it so you'll get integers from your time. this could be a failure mode :s
+t_step_loop = 0.0; %keep it so you'll get integers from your time. this could be a failure mode :s
 
 %% Arduino set up
 
-if exist('ardUno')==0;
-    try
-        ardUno = arduino('/dev/tty.usbmodem1421','uno', 'Libraries', 'Servo');
-        arduino_connect=1;
-    catch
-        fprintf('No arduino found')
-        arduino_connect=0;
-    end
-end
-
 MotorStruct = MotorParams();
-
-if (exist('servoObj')==0) && arduino_connect
-    servoObj = ServoSetup(MotorStruct,ardUno);
-end
 
 %% Set up
 [ Orientation , Position , Velocity ] = TrajectoryPlanFn(t_step); % plan trajectory
+
+%% Temporary cut position vector
+Position=Position(1:50,:);
 
 %% Loop
 num_traj=length(Position); %number of trajectory points in total
@@ -46,35 +35,11 @@ num_traj=length(Position); %number of trajectory points in total
 QmatStore       =   zeros(num_traj,5)   ;
 QmatAdjStore    =   QmatStore           ;
 
-num_traj=1;
-
-
 for kk=1:num_traj;
     [Qmat] = InvKinLean( Position(kk,1) , Position(kk,2) , Position(kk,3) ,R_Params );
-    QmatMat=[0,0,0,-30,0];
-    Qmat=QmatMat;
-    
-    
     QmatAdj = AdjustAngles( Qmat , MotorStruct );
-    
-    
     QmatStore(kk,:)     =   Qmat    ;
     QmatAdjStore(kk,:)  =   QmatAdj ;
-    
-    if arduino_connect
-        TurnServos(QmatAdj,servoObj);
-        Qdecimal = (Qmatrix+90)/180 %this is becuse the input angles have the range -90 to +90
-        QmatAdj
-        if kk>1;
-%             turn_stepper(QmatAdjStore(kk,1) , QmatAdjStore(kk-1,1) , ardUno )
-        else
-%             turn_stepper(QmatAdjStore(kk,1) , 0 , ardUno )
-        end
-        
-        
-    end
-    
-    
 end
 
 % close all
@@ -103,4 +68,16 @@ end
 % for g=1:length(Position_Long)
 %     [T LPVO(:,:,g)] = ForKinLean(Q1(g),Q2(g),Q3(g),Q4(g),Q5(g),R_Params);
 % end
+export =1;
+
+%Export
+if export==1;
+    
+    %%HACKY TEMP FIX
+    QmatAdjStore(:,2)=-QmatAdjStore(:,2);
+    ExpMatrix = [ QmatAdjStore ];
+    output_filename=strcat('exportqs','.csv')
+    dlmwrite(output_filename,ExpMatrix','precision','%.1f')
+end
+
 
