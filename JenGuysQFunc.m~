@@ -14,8 +14,7 @@ R_Params = [b, L1, L2, L3];
 t_step = .2; %keep it so you'll get integers from your time. this could be a failure mode :s
 t_step_loop = 0.0; %keep it so you'll get integers from your time. this could be a failure mode :s
 
-%% Can remove Motor Struct If required (put it on Arduino instead?)
-MotorStruct = MotorParams();
+%% Can remove Motor Struct If required (put it on Arduino instea
 
 %% Set up
 [ Orientation , Position , Velocity ] = TrajectoryPlanFn(t_step,LoadingX,LoadingY,TowerX,TowerY); % plan trajectory

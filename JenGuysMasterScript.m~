@@ -31,13 +31,6 @@ TowerY      = 0;
 s = serial('/dev/tty.usbmodem1411','BaudRate',115200);
 fopen(s);
 
-[A,count] = fscanf(s) %read the buffer, save as A
-if prod(A(1:end-2)=='Ready') %the logical returns a 1 for each char that is right. Product checks that all the values are 1.
-    %do nothing
-end
-
-    
-    
 OverallLength = length(QmatAdjStore);
 
 
@@ -46,6 +39,10 @@ NumChunks = floor(OverallLength/ChunkLength);
 Remainder = rem(OverallLength,ChunkLength); %remainder to be pushed in the last iteration of loop
 
 
+
+[A,count] = fscanf(s) %read the buffer, check if it
+if prod(A(1:end-2)=='Ready') %the logical returns a 1 for each char that is right. Product checks that all the values are 1.
+    
 
 %if the remainder is zero, don't try to add 1 to the loop
 if Remainder
