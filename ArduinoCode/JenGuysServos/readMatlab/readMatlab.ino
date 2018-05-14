@@ -16,23 +16,26 @@ void loop() {
 
   while (Serial.available() > 0) {
 
+    // Read the next char coming in
     char myChar = Serial.read();
 
-
+//checks to see if it is a 'q value'
     if (myChar == 't') // t denotes the qs are coming
     {
       float myFloat = Serial.parseFloat();
-//      Serial.println(myFloat);
       ll++;
 
     }
+
+    //checks to see if it is a header value
     if (myChar == 'h') //h is the header value (int). Sends the chunk length
     {
       float chunkFloat = Serial.parseFloat();
-//      Serial.println(chunkFloat);
       int chunkLen = (int) chunkFloat;
     }
 
+
+//checks to see if it's a footer value
     if (myChar == 'f') //h is the header value (int). Sends the chunk length
     {
       float footerFloat = Serial.parseFloat();
@@ -41,7 +44,7 @@ void loop() {
 
   }
 
-  delay(5000);
+  delay(1000);
   Serial.println("R"); //Lets matlab know we're ready to go
 
 

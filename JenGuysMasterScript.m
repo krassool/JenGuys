@@ -25,7 +25,6 @@ TowerY      = 0;
 %run initial trajectories
 [QmatAdjStore] = JenGuysQFunc(LoadingX,LoadingY,TowerX,TowerY);
 
-
 %% Start serial connection
 
 s = serial('/dev/tty.usbmodem1411','BaudRate',115200);
@@ -88,12 +87,16 @@ for ll=1:LoopEnd
     ll %temp. print the current
     
     
+    buff=''; %define buff as blank
     
     %%% Check is the arduino is ready for more information
-    [buff,count] = fscanf(s); %read the buffer, save as A
-    while sum(buff=='R')==0; %the logical returns a 1 for each char that is right. Product checks that all the values are 1.
+    while sum(buff=='R')==0; %sees if the currne.
+            [buff,count] = fscanf(s); %read the buffer, save as A
+
         %do nothing
     end
+    
+    
     
 end
 

@@ -10,7 +10,7 @@ if ~isempty(instrfind)
 end
 
 %define data chunk length
-ChunkLength=50;
+ChunkLength=10;
 
 %initial time step for trajectories
 t_step = .2; %keep it so you'll get integers from your time. this could be a failure mode :s
@@ -24,7 +24,6 @@ TowerY      = 0;
 
 %run initial trajectories
 [QmatAdjStore] = JenGuysQFunc(LoadingX,LoadingY,TowerX,TowerY);
-
 
 %% Start serial connection
 
@@ -74,10 +73,10 @@ for ll=1:LoopEnd
         fwrite(s,current_qs);   %write the qs to arduino
         
         
-        for i=1:5
-            readData = fscanf(s); %read the data back from the arduino
-            %             str_recieve = strcat(sprintf(' q %d   =  ',i), readData )
-        end
+%         for i=1:5
+%             readData = fscanf(s); %read the data back from the arduino
+%             %             str_recieve = strcat(sprintf(' q %d   =  ',i), readData )
+%         end
         
     end
     
@@ -90,10 +89,12 @@ for ll=1:LoopEnd
     
     
     %%% Check is the arduino is ready for more information
-    [A,count] = fscanf(s); %read the buffer, save as A
-    while A(1:end-2)=='R')==0; %the logical returns a 1 for each char that is right. Product checks that all the values are 1.
+    while sum(buff=='R')==0; %sees if the currne.
+        
         %do nothing
     end
+    
+    
     
 end
 
