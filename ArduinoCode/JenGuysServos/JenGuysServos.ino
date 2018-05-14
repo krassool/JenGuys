@@ -1,10 +1,6 @@
 //Libraries
 #include <Servo.h>
-#include <Stepper.h>
-#include <AccelStepper.h>
 
-
-double pi 3.14159265359;
 
 
 // temp BS long matrices

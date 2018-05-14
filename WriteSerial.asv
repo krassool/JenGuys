@@ -1,0 +1,27 @@
+% write serial
+
+
+%JenGuysMainAdj
+%QmatAdjStore=QmatAdjStore(1,:);
+
+if ~isempty(instrfind)
+     fclose(instrfind);
+     delete(instrfindall);
+end
+
+s = serial('COM6','BaudRate',115200);
+fopen(s);
+readData = fscanf(s);
+
+for j=1
+
+fwrite(s,'t179.12xt56.32xt30.54xt67.82xt53.23x');
+
+for i = 1:5
+    readData = fscanf(s)
+end
+
+fclose(s);
+% 
+% fclose(s)
+% delete(s)

@@ -2,31 +2,26 @@
 
 
 JenGuysMainAdj
-QmatAdjStore=QmatAdjStore(1,:);
+%QmatAdjStore=QmatAdjStore(1,:);
 
-s = serial('/dev/tty.usbmodem1411');
-fopen(s)
-
-
-myfl = 1.111;
-
-
-
-for kk=1:1 %length(QmatAdjStore)
-%     Qmatstring = mat2str( QmatAdjStore(kk,:) ,8)
-    fprintf(s , QmatAdjStore(1))
-    fprintf(s , QmatAdjStore(2))
-    fprintf(s , QmatAdjStore(3))
-    fprintf(s , QmatAdjStore(4))
-    fprintf(s , QmatAdjStore(5))    
-    fprintf(s , QmatAdjStore(1))
-    fprintf(s , QmatAdjStore(2))
-    fprintf(s , QmatAdjStore(3))
-    fprintf(s , QmatAdjStore(4))
-    fprintf(s , QmatAdjStore(5))
-    kk
+if ~isempty(instrfind)
+     fclose(instrfind);
+     delete(instrfindall);
 end
 
-outp=fscanf(s)
+s = serial('COM6','BaudRate',115200);
+fopen(s);
+readData = fscanf(s);
 
-fclose(s)
+for j=1:length(QmatAdjStore)
+    current_qs=strcat('t',num2str(QmatAdjStore(j,1)),'x','t',num2str(QmatAdjStore(j,2)),'x','t',num2str(QmatAdjStore(j,3)),'x','t',num2str(QmatAdjStore(j,4)),'x','t',num2str(QmatAdjStore(j,5)),'x');
+    fwrite(s,current_qs);
+    for i=1:5
+    readData = fscanf(s)
+    end
+end
+
+fclose(s);
+% 
+% fclose(s)
+% delete(s)
