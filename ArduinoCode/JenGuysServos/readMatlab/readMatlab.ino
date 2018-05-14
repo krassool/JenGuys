@@ -44,6 +44,9 @@ void loop() {
 
   }
 
+// this stuff is temporary. Once this is turned in to a function
+// the serial println can be done at the end of the 50 trajectories,
+// at the start of thi readMatlab function. (not just on a mindless delay loop)
   delay(1000);
   Serial.println("R"); //Lets matlab know we're ready to go
 
