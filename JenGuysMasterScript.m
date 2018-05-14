@@ -90,8 +90,8 @@ for ll=1:LoopEnd
     
     
     %%% Check is the arduino is ready for more information
-    [A,count] = fscanf(s); %read the buffer, save as A
-    while A(1:end-2)=='R'; %the logical returns a 1 for each char that is right. Product checks that all the values are 1.
+    [buff,count] = fscanf(s); %read the buffer, save as A
+    while sum(buff=='R')==0; %the logical returns a 1 for each char that is right. Product checks that all the values are 1.
         %do nothing
     end
     

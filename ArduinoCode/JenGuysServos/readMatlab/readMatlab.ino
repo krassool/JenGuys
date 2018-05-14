@@ -41,7 +41,7 @@ void loop() {
 
   }
 
-  delay(1000);
+  delay(5000);
   Serial.println("R"); //Lets matlab know we're ready to go
 
 
