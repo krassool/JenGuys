@@ -1,4 +1,4 @@
-function [ Orientation_Long , Position_Long , Velocity_Long , vals_per_traj ] =  TrajectoryPlanFn(t_step,LoadingX,LoadingY,TowerX,TowerY)
+function [ Orientation_Long , Position_Long , Velocity_Long ] =  TrajectoryPlanFn(t_step,LoadingX,LoadingY,TowerX,TowerY)
 
 %% block planning
 
@@ -10,7 +10,7 @@ tower_x=  TowerY ;
 %% Trajectory Planning %%%%%%%%%%%%%%%
 
 % Fixed parameters
-suction_pause = 1; %in seconds
+suction_pause = 3; %in seconds
 
 %fixed vectors
 PL     =[ LoadingX, LoadingY,15]  ; %loading bay position
@@ -22,6 +22,9 @@ vels_z =[0, 50, 10, 0]; %velocoity at (PL, P1, P2, Pf) in mm/s
 times  =[ 2, 4, 2 ]   ; %time for each arc (PL -> P1, then P1 -> P2, then P2 -> Pf
 via_clear=75;
 deg_0=0;
+case 1
+deg_f=90;
+case 2
 deg_f=90;
 
 %caluclated values
@@ -39,13 +42,6 @@ BFM_AngulVel = zeros(vals_per_return,1,num_blocks); %54 blocks
 
 % Loop to find all the trajectories, store them in BFMs
 for k=1:num_blocks
-    
-    %determine blokc rotation
-    if mod(k-1,6)<3
-        deg_f=90;
-    else
-        deg_f=0;
-    end
     
     P1 = [Via1xy , BlMat(k,3)+ via_clear]; %first via point is some x,y and the z height of the block plus some offset in the z
     Pf = BlMat(k,:); %final location is that of the block

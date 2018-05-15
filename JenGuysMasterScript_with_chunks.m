@@ -55,9 +55,9 @@ end
 
 
 %% Loop over each chunk to deliver it the arduino when asked
-for ll=0:LoopEnd-1
+for ll=1:LoopEnd
     %Define current chunk to send
-    QSend=QmatAdjStore(ll*ChunkLength+1 : ll*ChunkLength+ChunkLength,:);
+    QSend=QmatAdjStore(ll,:);
     
     %%%%% Checks if it's the last loop 
     if(ll>NumChunks) %if it's on the 'leftovers' loop. Cut the number of qs to be sent to the remaineder (what's left)
@@ -65,7 +65,7 @@ for ll=0:LoopEnd-1
     end
     
     %%%%%%% SEND HEADER %%%%%%%
-    if ll==1 %send this on the first time round
+    if ll==0 %send this on the first time round
         ChunkStr = strcat( 'h' , num2str(ChunkLength) )
         fwrite(s,ChunkStr);   %write the qs to arduino
     end
@@ -85,7 +85,7 @@ for ll=0:LoopEnd-1
     %%%%%%% WAIT FOR INFORMATION FROM ARDUINO %%%%%%%
     buff=''; %define buff as blank
     %%% Check is the arduino is ready for more information
-    while sum(buff=='R')==0; %sees if the currne.
+    while sum(buff=='N')==0; %sees if the currne.
             [buff,count] = fscanf(s); %read the buffer, save as buff
             
             %do nothing
