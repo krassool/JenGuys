@@ -78,14 +78,15 @@ for k=1:num_blocks
     VEL_traj = [VEL_traj ; zeros(suction_pause_cycle,3)];
     REV_POS_traj = [REV_POS_traj ; (ones(suction_pause_cycle,3).*PL)];
     REV_VEL_traj = [REV_VEL_traj ; zeros(suction_pause_cycle,3)];
+    
     %rotation
     Ot1          =    [Ot1 ; (ones(suction_pause_cycle,1).*deg_f1)];
     Ot1_dot      =    [Ot1_dot ; zeros(suction_pause_cycle,1)];
     REV_Ot1      =    [REV_Ot1 ; (ones(suction_pause_cycle,1).*deg_0)];
     REV_Ot1_dot  =    [REV_Ot1_dot ; zeros(suction_pause_cycle,1)];
     Ot2 = [Ot2 ; (ones(suction_pause_cycle,1).*deg_f2)];
-    Ot2_dot = [Ot2_dot ; (ones(suction_pause_cycle,1).*deg_f2)];
-    REV_Ot2 = [REV_Ot2 ; (ones(suction_pause_cycle,1).*deg_f2)];
+    Ot2_dot = [Ot2_dot ; (ones(suction_pause_cycle,1))];
+    REV_Ot2 = [REV_Ot2 ; (ones(suction_pause_cycle,1).*deg_0)];
     REV_Ot2_dot = [REV_Ot2_dot ; zeros(suction_pause_cycle,1)];
     
     
@@ -96,7 +97,7 @@ for k=1:num_blocks
     %     BFM_Rotation(:,:,k) = [Ot;REV_Ot];
     %     BFM_AngulVel(:,:,k) =   [Ot_dot;REV_Ot_dot]
     
-    Orientation_layer1=[Ot1;REV_Ot2];
+    Orientation_layer1=[Ot2;REV_Ot2];
     Orientation_layer2=[Ot1;REV_Ot1];
     Orientation_2Layer=[repmat(Orientation_layer1,3,1); repmat(Orientation_layer2,3,1)]; %David's hacky method
     Orientation_Long=repmat(Orientation_2Layer,num_blocks/6,1) 
