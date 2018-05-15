@@ -34,7 +34,7 @@ s4.name = 's4'          ;
 s4.pin  = 'D6'          ;
 s4.minp = 500*10^-6     ;
 s4.maxp = 2350*10^-6    ;
-s4.offset   = -30 ;  %This -40 is to make sure the rnage fits within 0-180 when going through inverse trajectory.
+s4.offset   = -30  -10 ;  %-30 is for 
 s4.dir      = 1           ;       
 
 

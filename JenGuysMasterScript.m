@@ -24,7 +24,7 @@ TowerY      =  150;
 
 %run initial trajectories
 [QmatAdjStore , vals_per_traj] = JenGuysQFunc(LoadingX,LoadingY,TowerX,TowerY);
-
+return
 %% Start serial connection
 
 s = serial('/dev/tty.usbmodem1411','BaudRate',9600);

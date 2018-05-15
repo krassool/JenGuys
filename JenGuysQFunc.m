@@ -9,7 +9,7 @@ L3  = 110;
 R_Params = [b, L1, L2, L3];
 
 %Offsets
-z_offset=30;
+z_offset=22.5;
 
 %DH table defined within ForKinLean function
 

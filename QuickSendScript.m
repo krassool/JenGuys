@@ -3,7 +3,7 @@
 trajstr = strcat('m',vals_per_traj,'x');
 fwrite(s,trajstr);
 
-Qmat = [0,0,0,0,0];
+Qmat = [0,0,0,15,0];
 
 MotorStruct = MotorParams();
 QmatAdj             =   AdjustAngles( Qmat , MotorStruct );

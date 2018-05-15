@@ -22,7 +22,8 @@ vels_z =[0, 50, 10, 0]; %velocoity at (PL, P1, P2, Pf) in mm/s
 times  =[ 2, 4, 2 ]   ; %time for each arc (PL -> P1, then P1 -> P2, then P2 -> Pf
 via_clear=75;
 deg_0=0;
-deg_f=90;
+deg_f1=90;
+deg_f2=0;
 
 %caluclated values
 tot_time=sum(times)+ (suction_pause); %total time for going from loading bay to block pos
@@ -40,12 +41,6 @@ BFM_AngulVel = zeros(vals_per_return,1,num_blocks); %54 blocks
 % Loop to find all the trajectories, store them in BFMs
 for k=1:num_blocks
     
-    %determine blokc rotation
-    if mod(k-1,6)<3
-        deg_f=90;
-    else
-        deg_f=0;
-    end
     
     P1 = [Via1xy , BlMat(k,3)+ via_clear]; %first via point is some x,y and the z height of the block plus some offset in the z
     Pf = BlMat(k,:); %final location is that of the block
@@ -58,7 +53,10 @@ for k=1:num_blocks
     [ x_traj_pos, x_traj_vel ] = single_traj(posies_x, vels_x, times , t_step);
     [ y_traj_pos, y_traj_vel ] = single_traj(posies_y, vels_y, times , t_step);
     [ z_traj_pos, z_traj_vel ] = single_traj(posies_z, vels_z, times , t_step);
-    [ Ot, Ot_dot ]             = rotation_planning(deg_0, deg_f, times , t_step);
+    [ Ot1, Ot1_dot ]             = rotation_planning(deg_0, deg_f1, times , t_step);
+    [ Ot2, Ot2_dot ]             = rotation_planning(deg_0, deg_f2, times , t_step);
+
+    
     
     
     %create x,y,z matrices
@@ -69,8 +67,10 @@ for k=1:num_blocks
     
     REV_POS_traj = flipud(POS_traj);
     REV_VEL_traj = flipud(VEL_traj);
-    REV_Ot = flipud(Ot);
-    REV_Ot_dot = flipud(Ot_dot);
+    REV_Ot1 = flipud(Ot1);
+    REV_Ot1_dot = flipud(Ot1_dot);
+    REV_Ot2 = flipud(Ot2);
+    REV_Ot2_dot = flipud(Ot2_dot);
     
     %add pauses (optional)
     %translation/velocity
@@ -79,10 +79,14 @@ for k=1:num_blocks
     REV_POS_traj = [REV_POS_traj ; (ones(suction_pause_cycle,3).*PL)];
     REV_VEL_traj = [REV_VEL_traj ; zeros(suction_pause_cycle,3)];
     %rotation
-    Ot          =    [Ot ; (ones(suction_pause_cycle,1).*deg_f)];
-    Ot_dot      =    [Ot_dot ; zeros(suction_pause_cycle,1)];
-    REV_Ot      =    [REV_Ot ; (ones(suction_pause_cycle,1).*deg_0)];
-    REV_Ot_dot  =    [REV_Ot_dot ; zeros(suction_pause_cycle,1)];
+    Ot1          =    [Ot1 ; (ones(suction_pause_cycle,1).*deg_f1)];
+    Ot1_dot      =    [Ot1_dot ; zeros(suction_pause_cycle,1)];
+    REV_Ot1      =    [REV_Ot1 ; (ones(suction_pause_cycle,1).*deg_0)];
+    REV_Ot1_dot  =    [REV_Ot1_dot ; zeros(suction_pause_cycle,1)];
+    Ot2 = [Ot2 ; (ones(suction_pause_cycle,1).*deg_f2)];
+    Ot2_dot = [Ot2_dot ; (ones(suction_pause_cycle,1).*deg_f2)];
+    REV_Ot2 = [REV_Ot2 ; (ones(suction_pause_cycle,1).*deg_f2)];
+    REV_Ot2_dot = [REV_Ot2_dot ; zeros(suction_pause_cycle,1)];
     
     
     
@@ -92,10 +96,10 @@ for k=1:num_blocks
     %     BFM_Rotation(:,:,k) = [Ot;REV_Ot];
     %     BFM_AngulVel(:,:,k) =   [Ot_dot;REV_Ot_dot]
     
-    Orientation_layer1=[zeros(38,1)];
-    Orientation_layer2=[Ot;REV_Ot];
+    Orientation_layer1=[Ot1;REV_Ot2];
+    Orientation_layer2=[Ot1;REV_Ot1];
     Orientation_2Layer=[repmat(Orientation_layer1,3,1); repmat(Orientation_layer2,3,1)]; %David's hacky method
-    Orientation_Long=repmat(Orientation_2Layer,num_blocks/6,1);
+    Orientation_Long=repmat(Orientation_2Layer,num_blocks/6,1) 
 end
 
 %% Rearrange the BFMs
